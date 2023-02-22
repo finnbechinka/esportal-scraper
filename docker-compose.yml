@@ -6,6 +6,8 @@ services:
     build: .
     ports:
       - 3555:3000
+    environment:
+      - MONGODB_CONNECTION_STRING=mongodb://mongo/esportal-scraper
   mongo:
     container_name: mongo
     restart: unless-stopped
