@@ -9,7 +9,7 @@ services:
   mongo:
     container_name: mongo
     restart: always
-    image: mongo:bionic
+    image: mongo
     ports:
       - 2717:27017
     volumes:
