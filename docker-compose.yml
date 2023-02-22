@@ -6,10 +6,13 @@ services:
     build: .
     ports:
       - 3555:3000
-    links:
-      - mongo
   mongo:
     container_name: mongo
+    restart: always
     image: mongo
     ports:
       - 2717:27017
+    volumes:
+      - mongodb-test:/data/db
+volumes:
+  mongodb-test:
