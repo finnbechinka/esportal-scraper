@@ -5,7 +5,7 @@ const Match = require("./schemas/Match.js");
 
 const PORT = 3000;
 
-db.connect("mongodb://mongo/esportal-scraper");
+db.connect(process.env.MONGODB_CONNECTION_STRING);
 
 function log(message) {
   console.log("[" + new Date().toISOString() + "] " + message);
