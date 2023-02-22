@@ -9,7 +9,7 @@ services:
   mongo:
     container_name: mongo
     restart: always
-    image: arm64v8/mongo
+    image: mongo:bionic
     ports:
       - 2717:27017
     volumes:
