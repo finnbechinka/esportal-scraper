@@ -1,0 +1,12 @@
+{
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "prometheus-query": "^3.3.0"
+  }
+}
