@@ -5,15 +5,15 @@ const Match = require("./schemas/Match.js");
 
 const PORT = 3000;
 
-db.connect("mongodb://mongo:2717/esportal-scraper");
+db.connect("mongodb://mongo/esportal-scraper");
 
 function log(message) {
   console.log("[" + new Date().toISOString() + "] " + message);
 }
 
 async function get_live_matches() {
-  const timestamp = Math.floor(new Date().getTime() / 1000);
-  log(timestamp);
+  // const timestamp = Math.floor(new Date().getTime() / 1000);
+  // log(timestamp);
   res = await fetch(`https://esportal.com/api/live_games/list?region_id=0`, {
     method: "GET",
     mode: "cors",
