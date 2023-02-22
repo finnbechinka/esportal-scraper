@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const db = require("mongoose");
 const Match = require("./schemas/Match.js");
+const fs = require("fs");
+const map_translation = JSON.parse(fs.readFileSync("./src/misc/maps.json"));
 
 const PORT = 3000;
 
@@ -45,6 +47,29 @@ app.get("/", async (req, res) => {
   // res.sendFile(path.join(__dirname, "/pages/index.html"));
   const all_matches = await Match.find({});
   res.json(all_matches);
+});
+
+app.get("/summary", async (req, res) => {
+  let maps = {};
+  let total = 0;
+  const matches = await Match.find({});
+  for (const match of matches) {
+    const map_name = map_translation[match.map_id].name;
+    if (!maps[map_name]) {
+      maps[map_name] = { name: map_name, count: 0, ratio: undefined };
+    }
+    maps[map_name].count++;
+    total++;
+  }
+  for (const map of Object.values(maps)) {
+    map.ratio = ((map.count / total) * 100).toFixed(2) + "%";
+  }
+  let most_played = Array.from(Object.values(maps))
+    .sort((a, b) => {
+      a.ratio < b.ratio ? 1 : -1;
+    })
+    .slice(0, 10);
+  res.send(most_played);
 });
 
 app.listen(PORT);
