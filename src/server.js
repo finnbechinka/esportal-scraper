@@ -27,7 +27,7 @@ async function get_live_matches() {
 async function store_new_matches() {
   const live_matches = await get_live_matches();
   for (const live_match of live_matches) {
-    if (!live_match.map_id || (await Match.exists({ id: live_match.id }))) {
+    if (!live_match.map_id || live_match.gather_id || (await Match.exists({ id: live_match.id }))) {
       continue;
     }
     const match = await Match.create({
