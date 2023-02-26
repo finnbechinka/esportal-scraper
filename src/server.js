@@ -7,6 +7,7 @@ const map_translation = JSON.parse(fs.readFileSync("./src/misc/maps.json"));
 
 const PORT = 3000;
 
+db.set("strictQuery", true);
 db.connect(process.env.MONGODB_CONNECTION_STRING);
 
 function log(message) {
