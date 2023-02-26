@@ -7,7 +7,7 @@ const map_translation = JSON.parse(fs.readFileSync("./src/misc/maps.json"));
 
 const PORT = 3000;
 
-db.connect(process.env.MONGODB_CONNECTION_STRING);
+// db.connect(process.env.MONGODB_CONNECTION_STRING);
 
 function log(message) {
   console.log("[" + new Date().toISOString() + "] " + message);
@@ -27,7 +27,12 @@ async function get_live_matches() {
 async function store_new_matches() {
   const live_matches = await get_live_matches();
   for (const live_match of live_matches) {
-    if (!live_match.map_id || live_match.gather_id || (await Match.exists({ id: live_match.id }))) {
+    if (
+      !live_match.map_id ||
+      live_match.gather_id ||
+      map_translation[live_match.map_id]?.flags == 7 ||
+      (await Match.exists({ id: live_match.id }))
+    ) {
       continue;
     }
     const match = await Match.create({
