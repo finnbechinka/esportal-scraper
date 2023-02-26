@@ -30,7 +30,7 @@ async function store_new_matches() {
     if (
       !live_match.map_id ||
       live_match.gather_id ||
-      map_translation[live_match.map_id]?.flags == 7 ||
+      map_translation[live_match.map_id]?.flags != 7 ||
       (await Match.exists({ id: live_match.id }))
     ) {
       continue;
