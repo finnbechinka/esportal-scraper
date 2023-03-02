@@ -1,15 +1,28 @@
+FROM node:18.14 as builder
+
+WORKDIR /usr/app
+
+COPY package*.json .
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
 FROM node:18.14
 
 ENV NODE_ENV production
 
-COPY ./src /app/src/
-COPY ./dist /app/dist/
-COPY package*.json /app
+WORKDIR /usr/app
 
-WORKDIR /app
+COPY package*.json .
 
-RUN npm ci
+RUN npm install --production
+
+COPY --from=builder /usr/app/dist ./dist
+COPY --from=builder /usr/app/src/misc ./src/misc
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD node dist/server.js
